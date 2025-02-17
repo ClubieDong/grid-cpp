@@ -1,0 +1,3 @@
+[submodule "3rd/ephem/pyephem"]
+	path = 3rd/ephem/pyephem
+	url = https://github.com/brandon-rhodes/pyephem

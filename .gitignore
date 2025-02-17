@@ -1,4 +1,5 @@
 /build/
+/3rd/ephem/build/
 /.cache/
 /.vscode/
 .DS_Store

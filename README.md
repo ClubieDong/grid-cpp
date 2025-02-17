@@ -3,7 +3,9 @@
 ## Setup environment
 
 ```bash
-# TODO
+git submodule update --init
+# Configure and build libastro
+cmake -DCMAKE_BUILD_TYPE=Release -S 3rd/ephem -B 3rd/ephem/build && cmake --build 3rd/ephem/build --parallel
 ```
 
 ## Build
