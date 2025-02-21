@@ -1,0 +1,9 @@
+.ipynb_checkpoints
+MANIFEST
+build
+dist
+ephem/_libastro*.so
+ephem/doc/_build
+tmp*.py
+*.py[co]
+*.egg-info
