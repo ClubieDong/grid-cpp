@@ -11,12 +11,17 @@ set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 # Create project
 project(grid LANGUAGES CXX)
 
-# Main executable
-file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/src/*.cpp)
-add_executable(${PROJECT_NAME} ${SRC_FILES})
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src)
-target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic)
+# Find Python and pybind11
+find_package(Python REQUIRED COMPONENTS Interpreter Development.Module)
+find_package(pybind11 CONFIG REQUIRED)
 
 # ephem/libastro
-target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${CMAKE_SOURCE_DIR}/3rd/ephem/pyephem/libastro ${CMAKE_SOURCE_DIR}/3rd/ephem/pyephem)
-target_link_libraries(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/3rd/ephem/build/libephem.so)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3rd/ephem)
+
+# Python module
+file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/grid/*.cpp)
+python_add_library(${PROJECT_NAME} MODULE ${SRC_FILES} WITH_SOABI)
+target_link_libraries(${PROJECT_NAME} PRIVATE pybind11::headers ephem -static-libstdc++)
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/grid)
+target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic)
+install(TARGETS ${PROJECT_NAME} DESTINATION ${PROJECT_NAME})

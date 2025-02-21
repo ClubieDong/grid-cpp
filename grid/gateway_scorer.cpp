@@ -48,7 +48,7 @@ double GatewayScorer::CalcScorePerTimeSlicePerCommPair(SatGraph &graph) const {
 
 double GatewayScorer::CalcScorePerTimeSlice(const std::vector<Lla> &gateways, double timeSec) const {
     double result = 0.0;
-    SatGraph graph(Config.ConstellationConfig, timeSec, gateways);
+    SatGraph graph(Config.CstConfig, timeSec, gateways);
     for (const auto &[src, dst] : Config.CommPairs) {
         graph.SetCommPair(src, dst);
         result += CalcScorePerTimeSlicePerCommPair(graph);

@@ -11,8 +11,8 @@ project(ephem LANGUAGES C)
 
 # ========== Create targets ==========
 # Compile all *.c files in the `pyephem/libastro` directory
-file(GLOB SRC_FILES ${CMAKE_SOURCE_DIR}/pyephem/libastro/*.c)
-file(GLOB DATA_FILES ${CMAKE_SOURCE_DIR}/pyephem/extensions/data/*.c)
-add_library(${PROJECT_NAME} SHARED ${SRC_FILES} ${DATA_FILES} ${CMAKE_SOURCE_DIR}/pyephem/extensions/dtoa.c)
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/pyephem)
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/pyephem/libastro)
+file(GLOB SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/pyephem/libastro/*.c)
+file(GLOB DATA_FILES ${CMAKE_CURRENT_SOURCE_DIR}/pyephem/extensions/data/*.c)
+add_library(${PROJECT_NAME} STATIC ${SRC_FILES} ${DATA_FILES} ${CMAKE_CURRENT_SOURCE_DIR}/pyephem/extensions/dtoa.c)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/pyephem)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/pyephem/libastro)

@@ -36,7 +36,7 @@ struct ConstellationConfig {
 };
 
 struct GatewayScorerConfig {
-    ConstellationConfig ConstellationConfig;
+    ConstellationConfig CstConfig;
     std::vector<double> TimeSlices;
     std::vector<std::pair<Lla, Lla>> CommPairs;
     unsigned int MaxPathCount;
