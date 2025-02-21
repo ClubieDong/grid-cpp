@@ -1,6 +1,6 @@
 #pragma once
 
-#include <numbers> // For std::numbers
+#include <numbers>
 
 namespace grid {
 

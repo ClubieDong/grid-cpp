@@ -1,7 +1,7 @@
 #pragma once
 
-#include "utils.hpp" // For startango::EARTH_RADIUS, startango::DegToRad
-#include <cmath>     // For std::sqrt, std::cos, std::sin
+#include "utils.hpp"
+#include <cmath>
 
 namespace grid {
 
@@ -23,6 +23,15 @@ struct Lla {
             .Z = (EARTH_RADIUS + Altitude) * std::sin(DegToRad(Latitude)),
         };
     }
+};
+
+struct ConstellationConfig {
+    unsigned int NumOrbits;
+    unsigned int NumSatellitesPerOrbit;
+    double Inclination;
+    double MeanMotion;
+    unsigned int MaxConnectionCount;
+    double MaxConnectionDistance;
 };
 
 } // namespace grid

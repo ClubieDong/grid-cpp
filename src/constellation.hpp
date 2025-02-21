@@ -1,22 +1,24 @@
 #pragma once
 
-#include "types.hpp" // grid::Ecef, grid::Lla
-#include <vector>    // For std::vector
+#include "types.hpp"
+#include <vector>
 
 namespace grid {
 
 class Constellation {
+private:
+    std::vector<Ecef> m_Satellites;
+
 public:
-    unsigned int NumOrbits;
-    unsigned int NumSatellitesPerOrbit;
-    double Inclination;
-    double MeanMotion;
-    std::vector<Ecef> SatellitesEcef;
-    std::vector<Lla> SatellitesLla;
+    ConstellationConfig Config;
 
-    explicit Constellation(unsigned int numOrbits, unsigned int numSatellitesPerOrbit, double inclination, double meanMotion, double timeSec);
+    explicit Constellation(const ConstellationConfig &config, double timeSec);
 
-    std::vector<unsigned int> GetConnectedSatellites(Ecef position, unsigned int maxConnectionCount, double maxConnectionDistance) const;
+    std::vector<unsigned int> GetConnectedSatellites(Ecef position) const;
+
+    const Ecef &GetSatelliteEcef(unsigned int idx) const;
+    const Ecef &GetSatelliteEcef(unsigned int orbitIdx, unsigned int satIdxInOrbit) const;
+    unsigned int GetSatelliteCount() const;
 };
 
 } // namespace grid

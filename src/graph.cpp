@@ -1,8 +1,8 @@
 #include "graph.hpp"
-#include <algorithm> // For std::reverse
-#include <limits>    // For std::numeric_limits
-#include <queue>     // For std::priority_queue
-#include <vector>    // For std::vector
+#include <algorithm>
+#include <limits>
+#include <queue>
+#include <vector>
 
 namespace grid {
 
@@ -40,7 +40,7 @@ void Graph::ChangeEdgeWeight(unsigned int node1, unsigned int node2, double newW
         }
 }
 
-std::vector<unsigned int> Graph::Dijkstra(unsigned int start, unsigned int target) const {
+std::pair<std::vector<unsigned int>, double> Graph::Dijkstra(unsigned int start, unsigned int target) const {
     std::vector<double> distances(m_AdjList.size(), std::numeric_limits<double>::max());
     std::vector<unsigned int> predecessors(m_AdjList.size(), -1u);
     std::priority_queue<DijkstraQueueElement> pq;
@@ -63,7 +63,7 @@ std::vector<unsigned int> Graph::Dijkstra(unsigned int start, unsigned int targe
             }
         }
     }
-    return ReconstructPath(start, target, predecessors);
+    return {ReconstructPath(start, target, predecessors), distances[target]};
 }
 
 } // namespace grid

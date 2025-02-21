@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector> // For std::vector
+#include <vector>
 
 namespace grid {
 
@@ -32,13 +32,15 @@ private:
 public:
     explicit Graph(unsigned int nodeCount) : m_AdjList(nodeCount) {}
 
+    unsigned int GetNodeCount() const { return m_AdjList.size(); }
     void AddEdge(unsigned int node1, unsigned int node2, double weight);
     void ChangeEdgeWeight(unsigned int node1, unsigned int node2, double newWeight);
+    void ClearEdgesOfNode(unsigned int node) { m_AdjList[node].clear(); }
 
-    std::vector<unsigned int> Dijkstra(unsigned int start, unsigned int target) const;
+    std::pair<std::vector<unsigned int>, double> Dijkstra(unsigned int start, unsigned int target) const;
 
     template <typename THeuristic>
-    std::vector<unsigned int> AStar(unsigned int start, unsigned int target, THeuristic heuristic) const;
+    std::pair<std::vector<unsigned int>, double> AStar(unsigned int start, unsigned int target, THeuristic heuristic) const;
 };
 
 } // namespace grid
