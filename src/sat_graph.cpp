@@ -49,7 +49,7 @@ unsigned int SatGraph::GetSatNodeIdx(unsigned int satIdx) const {
 }
 
 unsigned int SatGraph::GetSatNodeIdx(unsigned int orbitIdx, unsigned int satIdxInOrbit) const {
-    return orbitIdx * m_Constellation.GetSatelliteCount() + satIdxInOrbit;
+    return orbitIdx * m_Constellation.Config.NumSatellitesPerOrbit + satIdxInOrbit;
 }
 
 unsigned int SatGraph::GetGatewayNodeIdx(unsigned int gatewayIdx) const {
@@ -64,8 +64,8 @@ unsigned int SatGraph::GetDstNodeIdx() const {
     return GetNodeCount() - 1;
 }
 
-bool SatGraph::IsGatewayNode(unsigned int nodeIdx) const {
-    return m_Constellation.GetSatelliteCount() < nodeIdx && nodeIdx < GetNodeCount() - 2;
+bool SatGraph::IsSatNode(unsigned int nodeIdx) const {
+    return nodeIdx < m_Constellation.GetSatelliteCount();
 }
 
 } // namespace grid

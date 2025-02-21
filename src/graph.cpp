@@ -22,6 +22,13 @@ std::vector<unsigned int> Graph::ReconstructPath(unsigned int start, unsigned in
     return path;
 }
 
+double Graph::GetEdgeWeight(unsigned int node1, unsigned int node2) const {
+    for (const Edge &edge : m_AdjList[node1])
+        if (edge.To == node2)
+            return edge.Weight;
+    return std::numeric_limits<double>::max();
+}
+
 void Graph::AddEdge(unsigned int node1, unsigned int node2, double weight) {
     m_AdjList[node1].emplace_back(node2, weight);
     m_AdjList[node2].emplace_back(node1, weight);

@@ -24,7 +24,7 @@ public:
     unsigned int GetGatewayNodeIdx(unsigned int gatewayIdx) const;
     unsigned int GetSrcNodeIdx() const;
     unsigned int GetDstNodeIdx() const;
-    bool IsGatewayNode(unsigned int nodeIdx) const;
+    bool IsSatNode(unsigned int nodeIdx) const;
 };
 
 } // namespace grid

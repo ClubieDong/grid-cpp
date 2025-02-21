@@ -5,6 +5,7 @@
 namespace grid {
 
 constexpr double EARTH_RADIUS = 6371000.0;
+constexpr double LIGHT_SPEED = 299792458.0;
 
 constexpr double DegToRad(double degree) {
     return degree * std::numbers::pi / 180.0;

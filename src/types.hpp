@@ -2,6 +2,7 @@
 
 #include "utils.hpp"
 #include <cmath>
+#include <vector>
 
 namespace grid {
 
@@ -32,6 +33,14 @@ struct ConstellationConfig {
     double MeanMotion;
     unsigned int MaxConnectionCount;
     double MaxConnectionDistance;
+};
+
+struct GatewayScorerConfig {
+    ConstellationConfig ConstellationConfig;
+    std::vector<double> TimeSlices;
+    std::vector<std::pair<Lla, Lla>> CommPairs;
+    unsigned int MaxPathCount;
+    double Alpha;
 };
 
 } // namespace grid

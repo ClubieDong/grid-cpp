@@ -33,6 +33,7 @@ public:
     explicit Graph(unsigned int nodeCount) : m_AdjList(nodeCount) {}
 
     unsigned int GetNodeCount() const { return m_AdjList.size(); }
+    double GetEdgeWeight(unsigned int node1, unsigned int node2) const;
     void AddEdge(unsigned int node1, unsigned int node2, double weight);
     void ChangeEdgeWeight(unsigned int node1, unsigned int node2, double newWeight);
     void ClearEdgesOfNode(unsigned int node) { m_AdjList[node].clear(); }
