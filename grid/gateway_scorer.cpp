@@ -43,9 +43,9 @@ double GatewayScorer::CalcScorePerTimeSlicePerCommPair(SatGraph &graph) const {
     for (const auto &[node1, node2, weight] : removedEdges)
         graph.ChangeEdgeWeight(node1, node2, weight);
     assert(foundPathCount > 0);
-    auto diff = (maxLength - minLength) / minLength;
-    auto avg = totalLength / foundPathCount;
-    return (Config.Alpha * diff + (1.0 - Config.Alpha) * avg) / LIGHT_SPEED;
+    auto diffRatio = (maxLength - minLength) / minLength;
+    auto avgLatency = totalLength / LIGHT_SPEED / foundPathCount;
+    return Config.Alpha * diffRatio + (1.0 - Config.Alpha) * avgLatency;
 }
 
 double GatewayScorer::CalcScorePerTimeSlice(const std::vector<Lla> &gateways, double timeSec) const {
