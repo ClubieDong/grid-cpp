@@ -2,6 +2,8 @@
 #include "sat_graph.hpp"
 #include <cassert>
 #include <limits>
+#include <thread>
+#include <future>
 
 namespace grid {
 
@@ -57,9 +59,23 @@ double GatewayScorer::CalcScorePerTimeSlice(const std::vector<Lla> &gateways, do
 }
 
 double GatewayScorer::CalcScore(const std::vector<Lla> &gateways) const {
+    // Concurrently calculate the score for each time slice
+    auto numThreads = std::thread::hardware_concurrency();
+    auto slicesPerThread = (Config.TimeSlices.size() + numThreads - 1) / numThreads;
+    std::vector<std::future<double>> futures;
+    for (unsigned int startIdx = 0; startIdx < Config.TimeSlices.size(); startIdx += slicesPerThread) {
+        auto endIdx = std::min<unsigned int>(startIdx + slicesPerThread, Config.TimeSlices.size());
+        futures.emplace_back(std::async(std::launch::async, [this, &gateways, startIdx, endIdx] {
+            double partialResult = 0.0;
+            for (unsigned int idx = startIdx; idx < endIdx; ++idx)
+                partialResult += CalcScorePerTimeSlice(gateways, Config.TimeSlices[idx]);
+            return partialResult;
+        }));
+    }
+    // Reduce the results
     double result = 0.0;
-    for (auto timeSlice : Config.TimeSlices)
-        result += CalcScorePerTimeSlice(gateways, timeSlice);
+    for (auto &future : futures)
+        result += future.get();
     return result / Config.TimeSlices.size();
 }
 
